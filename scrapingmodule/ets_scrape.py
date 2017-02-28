@@ -3,7 +3,6 @@ import pickle
 import requests
 
 
-
 class Issue(object):
     def __init__(self):
         self.issue = []
@@ -44,7 +43,7 @@ class Issue(object):
         Save to pickle
         :return: Save to pickle
         """
-        with open('issue_pool.pkl', 'wb') as f:
+        with open('./scrapingmodule/issue_pool.pkl', 'wb') as f:
             pickle.dump(self.issue, file=f)
 
 
@@ -92,7 +91,8 @@ class Argument(object):
         Save to pickle
         :return: Save to pickle
         """
-        with open('argument_pool.pkl', 'wb') as fp:
+        with open('./scrapingmodule/'
+                  'argument_pool.pkl', 'wb') as fp:
             pickle.dump(self.argument, fp)
 
 
