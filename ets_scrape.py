@@ -37,7 +37,7 @@ class Issue(object):
                     self.issue.append(content)
                     content = " "
 
-            content += issue_content
+            content += issue_content + "\n"
 
     def save(self):
         """
@@ -85,7 +85,7 @@ class Argument(object):
                     self.argument.append(content)
                     content = " "
 
-            content += issue_content
+            content += issue_content + "\n"
 
     def save(self):
         """
