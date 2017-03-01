@@ -13,12 +13,13 @@ def send_mail(recipients, subject, message):
     message = header + message
 
     # Replace with username and password of the account you want to send the mail from
-    username = pickle.loads('credentials.pkl')
-    username = username[0]
+    with open('credentials.pkl', "rb") as fp:
+        username = pickle.load(fp)
+    login = username[0]
     password = username[1]
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.starttls()
-    server.login(username, password)
+    server.login(login, password)
     problems = server.sendmail('surajballambat@gmail.com', recipients, message)
     server.quit()
 
@@ -26,14 +27,14 @@ def input_flags():
     args = arguments.Args()
     return str(args.flags[0])
 
-def load_issue():
+def load_issue(recipient_list):
     # Read File
     with open('./scrapingmodule/issue_pool.pkl', 'rb') as f:
         issues = pickle.load(f)
 
     random_choice = choice(issues)
     puts(colored.green(random_choice))
-    send_mail(['surajballambat@gmail.com'], 'Issue Topic', random_choice)
+    send_mail(recipient_list, 'Issue Topic', random_choice)
     puts(colored.blue("Topics Remaining: {0}".format(len(issues))))
     for i, content in enumerate(issues):
         if random_choice == content:
@@ -48,13 +49,13 @@ def load_issue():
 
 
 
-def load_arg():
+def load_arg(recipient_list):
     with open('./scrapingmodule/argument_pool.pkl', 'rb') as f:
         arg = pickle.load(f)
 
     random_choice = choice(arg)
     puts(colored.red(choice(arg)))
-    send_mail(['surajballambat@gmail.com'], 'Argument Topic', random_choice)
+    send_mail(recipient_list, 'Argument Topic', random_choice)
     puts(colored.blue("Topics Remaining: {0}".format(len(arg))))
     for i, content in enumerate(arg):
         if random_choice == content:
@@ -76,10 +77,11 @@ def reload_files():
 
 def run():
 
+    recipient_list = ['surajballambat@gmail.com','nayan.taurian@gmail.com']
     if input_flags() == "--issue":
-        load_issue()
+        load_issue(recipient_list=recipient_list)
     if input_flags() == "--argument":
-        load_arg()
+        load_arg(recipient_list=recipient_list)
     if input_flags() == "--reset":
         reload_files()
 
